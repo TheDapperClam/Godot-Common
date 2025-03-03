@@ -11,9 +11,16 @@ namespace Common.Controllers {
             ProcessShared (delta);
             if (IsPossessing ()) {
                 ProcessPossessed (delta);
-                GlobalPosition = PossessedCharacter.GetViewPosition ();
             } else {
                 ProcessDepossessed (delta);
+            }
+        }
+
+        public override void _Process (double delta) {
+            base._Process (delta);
+
+            if (IsPossessing ()) {
+                GlobalPosition = PossessedCharacter.GetViewPosition ();
             }
         }
 
