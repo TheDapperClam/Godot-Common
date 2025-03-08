@@ -30,9 +30,9 @@ namespace Common.Input.ActionMaps {
                     foreach (KeyValuePair<IActionMappable, List<PressReleaseActions>> kvp in actionMap[actionName]) {
                         foreach (PressReleaseActions actions in kvp.Value) {
                             if (@event.IsPressed ()) {
-                                actions.PressedAction ();
+                                actions.PressedAction?.Invoke ();
                             } else {
-                                actions.ReleasedAction ();
+                                actions.ReleasedAction?.Invoke ();
                             }
                         }
                     }
