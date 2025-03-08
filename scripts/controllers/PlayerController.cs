@@ -1,9 +1,19 @@
 using Common.Characters;
+using Common.Input.ActionMaps;
 using Godot;
 
 namespace Common.Controllers {
     public abstract partial class PlayerController : Camera3D, IController {
         public ICharacter PossessedCharacter { get; private set; }
+
+        public override void _Input (InputEvent @event) {
+            base._Input (@event);
+
+            if (IsPossessing() && PossessedCharacter is IActionResponder responder) {
+                ActionMap actionMap = responder.GetActionMap ();
+                actionMap.ProcessInput (@event);
+            }
+        }
 
         public override void _PhysicsProcess (double delta) {
             base._PhysicsProcess (delta);
