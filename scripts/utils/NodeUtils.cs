@@ -1,20 +1,26 @@
 using Godot;
+using System.Collections.Generic;
 
 namespace Common.Utils.Nodes {
     public static class NodeUtils {
-        public static T GetChildOfType<T> (Node parent, bool recursive = true) where T : Node {
+        public static T GetChildOfType<T> (Node parent) {
             foreach (Node child in parent.GetChildren ()) {
                 if (child is T childOfType) {
                     return childOfType;
                 }
-                if (recursive && child.GetChildCount () > 0) {
-                    T recursiveChildOfType = GetChildOfType<T> (child, recursive);
-                    if (recursiveChildOfType != null) {
-                        return recursiveChildOfType;
-                    }
+            }
+            return default;
+        }
+
+        public static List<T> GetChildrenOfType<T> (Node parent) {
+            List<T> childrenOfType = new ();
+
+            foreach (Node child in parent.GetChildren ()) {
+                if (child is T childOfType) {
+                    childrenOfType.Add (childOfType);
                 }
             }
-            return null;
+            return childrenOfType;
         }
     }
 }
