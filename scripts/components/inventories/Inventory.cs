@@ -7,7 +7,10 @@ namespace Common.Components.Inventories {
     public partial class Inventory : Node {
         private static readonly Logger logger = new (typeof(Inventory));
 
-        private Array<Node> items = new ();
+        [Export]
+        public int Size { get; set; }
+
+        private Array<Node> items = [];
 
         public void Add (Node item) {
             if (item == null) {
@@ -20,6 +23,13 @@ namespace Common.Components.Inventories {
             }
             logger.Debug ("Adding item " + item.Name + " to inventory " + Name);
             items.Add (item);
+        }
+
+        public Node Get (int index) {
+            if (index < 0 || index >= items.Count) {
+                return null;
+            }
+            return items[index];
         }
 
         public void Remove (Node item) {
