@@ -28,11 +28,11 @@ namespace Common.Components.Inventories {
         }
 
         public void SetIndex (int newIndex) {
-            if (targetInventory.Size > 0) {
-                if (newIndex >= targetInventory.Size) {
+            if (targetInventory.Size () > 0) {
+                if (newIndex >= targetInventory.Size ()) {
                     newIndex = 0;
                 } else if (newIndex < 0) {
-                    newIndex = targetInventory.Size - 1;
+                    newIndex = targetInventory.Size () - 1;
                 }
                 index = newIndex;
                 logger.Debug ("Selected index {0} for inventory {1}", index, targetInventory.Name);

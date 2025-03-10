@@ -8,8 +8,6 @@ namespace Common.Components.Inventories {
         private static readonly Logger logger = new (typeof(Inventory));
 
         [Export]
-        public int Size { get; set; }
-
         private Array<Node> items = [];
 
         public void Add (Node item) {
@@ -43,6 +41,10 @@ namespace Common.Components.Inventories {
             }
             logger.Debug ("Removing item " + item.Name + " to inventory " + Name);
             items.Remove (item);
+        }
+
+        public int Size () {
+            return items.Count;
         }
     }
 }
