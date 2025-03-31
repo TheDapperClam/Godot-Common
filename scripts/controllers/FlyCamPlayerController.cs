@@ -28,9 +28,9 @@ namespace Common.Controllers {
 		public override void _Input (InputEvent @event) {
 			base._Input (@event);
 
-			if (Input.MouseMode == Input.MouseModeEnum.Captured) {
-				moveInput.X = Input.GetAxis (MOVE_LEFT_ACTION, MOVE_RIGHT_ACTION);
-				moveInput.Y = Input.GetAxis (MOVE_FORWARD_ACTION, MOVE_BACK_ACTION);
+			if (Godot.Input.MouseMode == Godot.Input.MouseModeEnum.Captured) {
+				moveInput.X = Godot.Input.GetAxis (MOVE_LEFT_ACTION, MOVE_RIGHT_ACTION);
+				moveInput.Y = Godot.Input.GetAxis (MOVE_FORWARD_ACTION, MOVE_BACK_ACTION);
 				moveInput = moveInput.Normalized ();
 			} else {
 				moveInput = Vector2.Zero;
@@ -42,7 +42,7 @@ namespace Common.Controllers {
 					break;
 			}
 
-			doUse = Input.IsActionJustPressed (USE_ACTION);
+			doUse = Godot.Input.IsActionJustPressed (USE_ACTION);
 		}
 
 		public override void _PhysicsProcess (double delta) {
@@ -55,7 +55,7 @@ namespace Common.Controllers {
 		public override void _Ready () {
 			base._Ready ();
 
-			Input.MouseMode = Input.MouseModeEnum.Captured;
+			Godot.Input.MouseMode = Godot.Input.MouseModeEnum.Captured;
 			lookSensitivity = SettingsManager.GetSetting (SETTING_LOOK_SENSITIVITY, Vector2.One).AsVector2 ();
 
 			useRaycast = new () {
