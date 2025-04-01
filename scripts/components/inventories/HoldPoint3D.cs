@@ -22,13 +22,18 @@ namespace Common.Components.Inventories {
         public override void _Ready () {
             base._Ready ();
 
+            OnSelectionChanged (targetSelector.GetSelected ());
             targetSelector.SelectionChanged += OnSelectionChanged;
         }
 
         private void OnSelectionChanged (Node selected) {
-            selectedNode?.Hide ();
+            if (selectedNode != null) {
+                selectedNode.Hide ();
+                selectedNode.TopLevel = false;
+            }
             if (selected is Node3D node3d) {
                 selectedNode = node3d;
+                selectedNode.TopLevel = true;
                 selectedNode.Show ();
             } else {
                 selectedNode = null;

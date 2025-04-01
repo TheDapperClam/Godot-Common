@@ -1,4 +1,5 @@
 using Common.Input.ActionMaps;
+using Common.Items.Fireables;
 using Common.Logging;
 using Godot;
 using System.Collections.Generic;
@@ -14,16 +15,42 @@ namespace Common.Components.Inventories {
         [Export]
         private Inventory targetInventory;
         [Export]
-        private string next_action = "inventory_next";
+        private string firePrimaryAction = "fire1";
         [Export]
-        private string previous_action = "inventory_previous";
+        private string nextAction = "inventory_next";
+        [Export]
+        private string previousAction = "inventory_previous";
 
         private int index;
+        private bool firePrimary;
+        private bool firePrimaryReleased;
+
+        public override void _PhysicsProcess (double delta) {
+            base._PhysicsProcess (delta);
+
+            Node currentItem = GetSelected ();
+
+            if (firePrimary) {
+                if (currentItem is IFireable fireable) {
+                    fireable.Fire ();
+                }
+            } else if (firePrimaryReleased) {
+                if (currentItem is IHoldFireable holdFireable) {
+                    holdFireable.FireReleased ();
+                }
+                firePrimaryReleased = false;
+            }
+        }
+
+        public Node GetSelected () {
+            return targetInventory.Get (index);
+        }
 
         public Dictionary<string, PressReleaseActions> GetActions () {
             return new () {
-                { next_action, new (InventoryNextPressed, null) },
-                { previous_action, new (InventoryPreviousPressed, null) }
+                { firePrimaryAction, new (FirePrimaryPressed, FirePrimaryReleased) },
+                { nextAction, new (InventoryNextPressed, null) },
+                { previousAction, new (InventoryPreviousPressed, null) }
             };
         }
 
@@ -42,6 +69,15 @@ namespace Common.Components.Inventories {
                     logger.Warn ("Inventory {0} has a size of 0, cannot set selector index for {1}", targetInventory.Name, Name);
                 }
             }
+        }
+
+        private void FirePrimaryPressed () {
+            firePrimary = true;
+        }
+
+        private void FirePrimaryReleased () {
+            firePrimary = false;
+            firePrimaryReleased = true;
         }
 
         private void InventoryNextPressed () {
