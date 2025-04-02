@@ -6,7 +6,7 @@ namespace Common.Characters {
         public Node3D ViewPoint { get; set; }
 
         public Vector3 GetViewPosition () {
-            return ViewPoint.GlobalPosition;
+            return ViewPoint != null ? ViewPoint.GlobalPosition : Vector3.Zero;
         }
     }
 }
