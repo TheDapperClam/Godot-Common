@@ -1,12 +1,16 @@
+using Common.Items.Projectiles;
+using Common.Logging;
 using Godot;
 
 namespace Common.Items.Fireables.Weapons.Guns {
 	[GlobalClass]
 	public partial class Gun3D : Node3D, IHoldFireable {
+		private static readonly Logger logger = new Logger (typeof (Gun3D));
+
 		[Export]
 		private Node3D muzzle;
 		[Export]
-		private PackedScene projectilePrefab;
+		private Node3D projectilePrefab;
 		[Export]
 		private int projectilesToFire = 1;
 		[Export]
@@ -31,11 +35,20 @@ namespace Common.Items.Fireables.Weapons.Guns {
 			projectilesFired = 0;
 		}
 
-		private void SpawnProjectile (PackedScene prefab, Vector3 position, Vector3 rotation) {
-			Node3D projectile = prefab.Instantiate<Node3D> ();
-			projectile.Position = position;
-			projectile.Rotation = rotation;
-			GetTree ().CurrentScene.AddChild (projectile);
+		private void SpawnProjectile (Node3D prefab, Vector3 position, Vector3 rotation) {
+			if (prefab == null) {
+				logger.Error ("Projectile for {0} hasn't been assigned", Name);
+				return;
+			}
+
+			Node3D newInstance = prefab.Duplicate () as Node3D;
+			newInstance.Position = position;
+			newInstance.Rotation = rotation;
+			GetTree ().CurrentScene.AddChild (newInstance);
+
+			if (newInstance is IProjectile projectile) {
+				projectile.SetActive (true);
+			}
 		}
 	}
 }
