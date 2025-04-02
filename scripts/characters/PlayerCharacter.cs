@@ -3,7 +3,8 @@ using Common.Input.ActionMaps;
 using Godot;
 
 namespace Common.Characters {
-	public partial class FirstPersonCharacter : Character3D, IActionResponder, ILooker {
+	[GlobalClass]
+	public partial class PlayerCharacter : Character3D, IActionResponder, ILooker {
 		private ActionMap actionMap;
 
 		public override void _Ready () {
