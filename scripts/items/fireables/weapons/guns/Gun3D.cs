@@ -5,7 +5,9 @@ using Godot;
 namespace Common.Items.Fireables.Weapons.Guns {
 	[GlobalClass]
 	public partial class Gun3D : Node3D, IHoldFireable {
-		private static readonly Logger logger = new Logger (typeof (Gun3D));
+		private const float TARGET_MAX_RANGE = 100000.0f;
+
+		private static readonly Logger logger = new (typeof (Gun3D));
 
 		[Export]
 		private Node3D muzzle;
@@ -18,6 +20,20 @@ namespace Common.Items.Fireables.Weapons.Guns {
 
 		private ulong nextFireTime;
 		private int projectilesFired;
+		private RayCast3D targetRaycast;
+
+		public override void _Ready () {
+			base._Ready ();
+
+			targetRaycast = new () {
+				TargetPosition = Vector3.Forward * TARGET_MAX_RANGE
+			};
+			AddChild (targetRaycast);
+
+			if (projectilePrefab is IProjectile projectile) {
+				projectile.SetActive (false);
+			}
+		}
 
 		public void Fire () {
 			if (projectilesToFire >= 0 && projectilesFired >= projectilesToFire) {
@@ -42,11 +58,18 @@ namespace Common.Items.Fireables.Weapons.Guns {
 			}
 
 			Node3D newInstance = prefab.Duplicate () as Node3D;
-			newInstance.Position = position;
-			newInstance.Rotation = rotation;
 			GetTree ().CurrentScene.AddChild (newInstance);
 
 			if (newInstance is IProjectile projectile) {
+				Vector3 targetPosition = targetRaycast.IsColliding () ?
+					targetRaycast.GetCollisionPoint () : GlobalPosition + targetRaycast.TargetPosition.Normalized () * TARGET_MAX_RANGE;
+				ProjectileFireProperties properties = new () {
+					MuzzlePosition = position,
+					MuzzleRotation = rotation,
+					TargetPosition = targetPosition
+				};
+
+				projectile.Initiate (properties);
 				projectile.SetActive (true);
 			}
 		}
