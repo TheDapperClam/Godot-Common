@@ -46,7 +46,7 @@ namespace Common.Controllers {
         }
 
         public void Possess (ICharacter character) {
-            if (character == null && character == PossessedCharacter) {
+            if (character == null || character == PossessedCharacter) {
                 return;
             }
             PossessedCharacter = character;
