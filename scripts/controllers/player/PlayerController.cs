@@ -2,7 +2,7 @@ using Common.Characters;
 using Common.Input.ActionMaps;
 using Godot;
 
-namespace Common.Controllers {
+namespace Common.Controllers.Player {
     public abstract partial class PlayerController : Camera3D, IController {
         public ICharacter PossessedCharacter { get; private set; }
 

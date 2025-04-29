@@ -4,7 +4,7 @@ using Common.Items.Usables;
 using Common.Managers.Settings;
 using Common.Components.Actions.Movement;
 
-namespace Common.Controllers {
+namespace Common.Controllers.Player {
 	public partial class FlyCamPlayerController : PlayerController {
 		private const float CAMERA_X_CLAMP = Mathf.Pi * 0.5f;
 		private const string MOVE_FORWARD_ACTION = "move_up";
