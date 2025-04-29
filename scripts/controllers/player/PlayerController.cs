@@ -1,9 +1,12 @@
 using Common.Characters;
 using Common.Input.ActionMaps;
+using Common.Logging;
 using Godot;
 
 namespace Common.Controllers.Player {
     public abstract partial class PlayerController : Camera3D, IController {
+        private static readonly Logger logger = new (typeof (PlayerController));
+
         public ICharacter PossessedCharacter { get; private set; }
 
         public override void _Input (InputEvent @event) {
@@ -38,6 +41,8 @@ namespace Common.Controllers.Player {
             if (PossessedCharacter == null) {
                 return;
             }
+            logger.Debug ("{0} depossessed {1}", Name, ((Node) PossessedCharacter).Name);
+            ((Node) PossessedCharacter).TreeExiting -= OnPossessedCharacterExitingTree;
             PossessedCharacter = null;
         }
 
@@ -50,6 +55,8 @@ namespace Common.Controllers.Player {
                 return;
             }
             PossessedCharacter = character;
+            ((Node) PossessedCharacter).TreeExiting += OnPossessedCharacterExitingTree;
+            logger.Debug ("{0} possessed {1}", Name, ((Node) PossessedCharacter).Name);
         }
 
         /// <summary>
@@ -77,6 +84,10 @@ namespace Common.Controllers.Player {
         /// <param name="delta"></param>
         protected virtual void ProcessShared (double delta) {
             // Base does nothing. We want this to be optional, so no abstract
+        }
+
+        private void OnPossessedCharacterExitingTree () {
+            Depossess ();
         }
     }
 }
