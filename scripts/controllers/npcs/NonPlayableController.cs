@@ -31,8 +31,9 @@ namespace Common.Controllers.Npcs {
             if (PossessedCharacter == null) {
                 return;
             }
+            logger.Debug ("{0} depossessed {1} and is queuing to be freed", Name, ((Node) PossessedCharacter).Name);
             PossessedCharacter = null;
-            logger.Debug ("{0} depossessed", Name);
+            QueueFree ();
         }
 
         public bool IsPossessing () {
@@ -44,6 +45,7 @@ namespace Common.Controllers.Npcs {
                 return;
             }
             PossessedCharacter = character;
+            ((Node) PossessedCharacter).TreeExiting += OnPossessedCharacterExitingTree;
             logger.Debug ("{0} possessed {1}", Name, ((Node) PossessedCharacter).Name);
         }
 
@@ -72,6 +74,10 @@ namespace Common.Controllers.Npcs {
         /// <param name="delta"></param>
         protected virtual void ProcessShared (double delta) {
             // Base does nothing. We want this to be optional, so no abstract
+        }
+
+        private void OnPossessedCharacterExitingTree () {
+            Depossess ();
         }
     }
 }
