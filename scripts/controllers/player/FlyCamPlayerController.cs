@@ -12,7 +12,7 @@ namespace Common.Controllers.Player {
 		private const string MOVE_LEFT_ACTION = "move_left";
 		private const string MOVE_RIGHT_ACTION = "move_right";
 		private const string USE_ACTION = "use";
-		private const string SETTING_LOOK_SENSITIVITY = "application/config/input/mouse_sensitivity";
+		private const string SETTING_LOOK_SENSITIVITY = "godot_common/settings/input/mouse_and_keyboard/mouse_sensitivity";
 
 		[Export]
 		private float flySpeed = 10.0f;
