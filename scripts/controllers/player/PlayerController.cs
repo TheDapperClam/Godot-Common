@@ -1,10 +1,14 @@
 using Common.Characters;
 using Common.Input.ActionMaps;
 using Common.Logging;
+using Common.Managers.Settings;
 using Godot;
 
 namespace Common.Controllers.Player {
     public abstract partial class PlayerController : Camera3D, IController {
+        private const float DEFAULT_FOV = 90.0f;
+        private const string SETTING_FOV = "godot_common/settings/display/field_of_view";
+
         private static readonly Logger logger = new (typeof (PlayerController));
 
         public ICharacter PossessedCharacter { get; private set; }
@@ -35,6 +39,12 @@ namespace Common.Controllers.Player {
             if (IsPossessing ()) {
                 GlobalPosition = PossessedCharacter.GetViewPosition ();
             }
+        }
+
+        public override void _Ready () {
+            base._Ready ();
+
+            Fov = (float) SettingsManager.GetSetting (SETTING_FOV, DEFAULT_FOV).AsDouble ();
         }
 
         public void Depossess () {
