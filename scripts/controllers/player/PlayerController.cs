@@ -3,8 +3,10 @@ using Common.Input.ActionMaps;
 using Common.Logging;
 using Common.Managers.Settings;
 using Godot;
+using System;
 
 namespace Common.Controllers.Player {
+    [Obsolete ("Controllers are deprecated, use sockets instead")]
     public abstract partial class PlayerController : Camera3D, IController {
         private const float DEFAULT_FOV = 90.0f;
         private const string SETTING_FOV = "godot_common/settings/display/field_of_view";

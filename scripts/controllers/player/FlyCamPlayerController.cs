@@ -3,9 +3,11 @@ using Common.Utils.Vectors;
 using Common.Items.Usables;
 using Common.Managers.Settings;
 using Common.Components.Actions.Movement;
+using System;
 
 namespace Common.Controllers.Player {
-	public partial class FlyCamPlayerController : PlayerController {
+    [Obsolete ("Controllers are deprecated, use sockets instead")]
+    public partial class FlyCamPlayerController : PlayerController {
 		private const float CAMERA_X_CLAMP = Mathf.Pi * 0.5f;
 		private const string MOVE_FORWARD_ACTION = "move_up";
 		private const string MOVE_BACK_ACTION = "move_down";

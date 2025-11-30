@@ -1,27 +1,19 @@
-using Common.Input.ActionMaps;
+using Common.Input.Piping;
 using Common.Managers.Settings;
 using Godot;
-using System.Collections.Generic;
 
 namespace Common.Components.Actions.Movement {
     [GlobalClass]
-    public partial class Moveable : Node, IMoveable, IActionMappable {
+    public partial class Moveable : Node, IActionPipe, IMoveable {
         private const string GRAVITY_SETTING = "physics/3d/default_gravity";
 
         [Export]
         public float GravityScale { get; set; } = 1.0f;
 
         [Export]
-        private string moveDownAction = "move_down";
-        [Export]
-        private string moveLeftAction = "move_left";
-        [Export]
-        private string moveRightAction = "move_right";
-        [Export]
-        private string moveUpAction = "move_up";
-        [Export]
         private float moveSpeed = 200.0f;
 
+        private PipeMapper pipeController;
         private float gravity;
         private bool movingDown;
         private bool movingLeft;
@@ -39,16 +31,8 @@ namespace Common.Components.Actions.Movement {
         public override void _Ready () {
             base._Ready ();
 
+            pipeController = new (this);
             gravity = (float) SettingsManager.GetSetting (GRAVITY_SETTING, 9.8f).AsDouble ();
-        }
-
-        public Dictionary<string, PressReleaseActions> GetActions () {
-            return new () {
-                { moveDownAction, new (MoveDownPressed, MoveDownReleased) },
-                { moveLeftAction, new (MoveLeftPressed, MoveLeftReleased) },
-                { moveRightAction, new (MoveRightPressed, MoveRightReleased) },
-                { moveUpAction, new (MoveUpPressed, MoveUpReleased) }
-            };
         }
 
         public void Move (Vector2 direction, double delta) {
@@ -63,34 +47,46 @@ namespace Common.Components.Actions.Movement {
             }
         }
 
+        public void Pipe (InputEvent inputEvent) {
+            pipeController.Pipe (inputEvent);
+        }
+
+        [PippedAction ("move_down", true)]
         private void MoveDownPressed () {
             movingDown = true;
         }
 
+        [PippedAction ("move_left", true)]
         private void MoveLeftPressed () {
             movingLeft = true;
         }
 
+        [PippedAction ("move_right", true)]
         private void MoveRightPressed () {
             movingRight = true;
         }
 
+        [PippedAction ("move_up", true)]
         private void MoveUpPressed () {
             movingUp = true;
         }
 
+        [PippedAction ("move_down", false)]
         private void MoveDownReleased () {
             movingDown = false;
         }
 
+        [PippedAction ("move_left", false)]
         private void MoveLeftReleased () {
             movingLeft = false;
         }
 
+        [PippedAction ("move_right", false)]
         private void MoveRightReleased () {
             movingRight = false;
         }
 
+        [PippedAction ("move_up", false)]
         private void MoveUpReleased () {
             movingUp = false;
         }

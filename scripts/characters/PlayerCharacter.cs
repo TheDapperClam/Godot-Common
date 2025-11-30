@@ -1,9 +1,11 @@
 using Common.Components.Actions.Movement;
 using Common.Input.ActionMaps;
 using Godot;
+using System;
 
 namespace Common.Characters {
-	[GlobalClass]
+    [Obsolete ("Characters are deprecated, use sockets instead")]
+    [GlobalClass]
 	public partial class PlayerCharacter : Character3D, IActionResponder {
 		private ActionMap actionMap;
 

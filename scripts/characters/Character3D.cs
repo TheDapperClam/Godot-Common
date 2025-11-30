@@ -1,7 +1,9 @@
 using Common.Components.Actions.Movement;
 using Godot;
+using System;
 
 namespace Common.Characters {
+    [Obsolete ("Characters are deprecated, use sockets instead")]
     public abstract partial class Character3D : CharacterBody3D, ICharacter, ILooker {
         [Export]
         public Node3D ViewPoint { get; set; }

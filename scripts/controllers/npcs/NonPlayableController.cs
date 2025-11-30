@@ -1,8 +1,10 @@
 using Common.Characters;
 using Common.Logging;
 using Godot;
+using System;
 
 namespace Common.Controllers.Npcs {
+    [Obsolete ("Controllers are deprecated, use sockets instead")]
     public partial class NonPlayableController : Node3D, IController {
         private static readonly Logger logger = new (typeof (NonPlayableController));
 

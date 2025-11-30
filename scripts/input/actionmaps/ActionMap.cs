@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 
 namespace Common.Input.ActionMaps {
+    [Obsolete("Action maps are depricated, use input piping")]
     public partial class ActionMap : Node {
         private const string PRESSED_ACTION_SUFFIX = "Pressed";
         private const string RELEASED_ACTION_SUFFIX = "Released";
