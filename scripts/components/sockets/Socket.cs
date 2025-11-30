@@ -3,7 +3,7 @@ using Godot;
 
 namespace Common.Components.Sockets {
     [GlobalClass]
-    public partial class Socket : Node, IActionPipe, ISocket {
+    public partial class Socket : Node, IInputPipe, ISocket {
         [Signal]
         public delegate void InputEventHandler (InputEvent inputEvent);
 
@@ -33,7 +33,7 @@ namespace Common.Components.Sockets {
         }
 
         public void Pipe (InputEvent inputEvent) {
-            if (child is IActionPipe pipe) {
+            if (child is IInputPipe pipe) {
                 pipe.Pipe (inputEvent);
                 return;
             }

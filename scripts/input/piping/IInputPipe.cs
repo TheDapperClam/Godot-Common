@@ -1,7 +1,7 @@
 using Godot;
 
 namespace Common.Input.Piping {
-    public interface IActionPipe {
+    public interface IInputPipe {
         void Pipe (InputEvent inputEvent);
     }
 }
