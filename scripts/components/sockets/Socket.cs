@@ -5,7 +5,7 @@ namespace Common.Components.Sockets {
     [GlobalClass]
     public partial class Socket : Node, IInputPipe, ISocket {
         [Signal]
-        public delegate void InputEventHandler (InputEvent inputEvent);
+        public delegate void InputEventHandler (InputEvent inputEvent, Variant arg);
 
         [Export]
         private Node child;
@@ -23,6 +23,7 @@ namespace Common.Components.Sockets {
 
             if (child is IMountable3D mountable3D && GetParent() is Node3D parent3D) {
                 parent3D.GlobalPosition = mountable3D.GetMountPoint ();
+                parent3D.GlobalRotation = mountable3D.GetMountRotation ();
             }
         }
 
@@ -40,12 +41,12 @@ namespace Common.Components.Sockets {
             return child != null;
         }
 
-        public void Pipe (InputEvent inputEvent) {
+        public void Pipe (InputEvent inputEvent, Variant arg) {
             if (child is IInputPipe pipe) {
-                pipe.Pipe (inputEvent);
+                pipe.Pipe (inputEvent, arg);
                 return;
             }
-            EmitSignal (SignalName.Input, inputEvent);
+            EmitSignal (SignalName.Input, inputEvent, arg);
         }
     }
 }

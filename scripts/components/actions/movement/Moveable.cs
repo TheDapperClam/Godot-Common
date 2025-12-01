@@ -1,3 +1,4 @@
+using Common.Input.Events;
 using Common.Input.Mapping;
 using Common.Input.Piping;
 using Common.Managers.Settings;
@@ -51,39 +52,39 @@ namespace Common.Components.Actions.Movement {
             inputActionMap.Add (moveActionUp, MoveUpPressed, MoveUpReleased);
         }
 
-        public void Pipe (InputEvent inputEvent) {
-            inputActionMap.Process (inputEvent);
+        public void Pipe (InputEvent inputEvent, Variant arg) {
+            inputActionMap.Process (inputEvent, arg);
         }
 
-        private void MoveDownPressed () {
+        private void MoveDownPressed (Variant arg) {
             movingDown = true;
         }
 
-        private void MoveLeftPressed () {
+        private void MoveLeftPressed (Variant arg) {
             movingLeft = true;
         }
 
-        private void MoveRightPressed () {
+        private void MoveRightPressed (Variant arg) {
             movingRight = true;
         }
 
-        private void MoveUpPressed () {
+        private void MoveUpPressed (Variant arg) {
             movingUp = true;
         }
 
-        private void MoveDownReleased () {
+        private void MoveDownReleased (Variant arg) {
             movingDown = false;
         }
 
-        private void MoveLeftReleased () {
+        private void MoveLeftReleased (Variant arg) {
             movingLeft = false;
         }
 
-        private void MoveRightReleased () {
+        private void MoveRightReleased (Variant arg) {
             movingRight = false;
         }
 
-        private void MoveUpReleased () {
+        private void MoveUpReleased (Variant arg) {
             movingUp = false;
         }
     }

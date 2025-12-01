@@ -1,11 +1,12 @@
+using Godot;
 using System;
 
 namespace Common.Input.Mapping {
     public class InputActions {
-        public Action Pressed { get; set; }
-        public Action Released { get; set; }
+        public Action<Variant> Pressed { get; set; }
+        public Action<Variant> Released { get; set; }
 
-        public InputActions (Action pressed, Action released) {
+        public InputActions (Action<Variant> pressed, Action<Variant> released) {
             Pressed = pressed;
             Released = released;
         }

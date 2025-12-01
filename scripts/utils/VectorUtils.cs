@@ -10,6 +10,10 @@ namespace Common.Utils.Vectors {
             return new Vector3 (vector.X, 0.0f, vector.Y);
         }
 
+        public static Vector3 Vector2XYToVector3YX (Vector2 vector) {
+            return new Vector3 (vector.Y, vector.X, 0.0f);
+        }
+
         public static Vector2 Vector3XYToVector2XY (Vector3 vector) {
             return new Vector2 (vector.X, vector.Y);
         }

@@ -9,5 +9,9 @@ namespace Common.Components.Sockets {
         public Vector3 GetMountPoint () {
             return mountPoint.GlobalPosition;
         }
+
+        public Vector3 GetMountRotation () {
+            return mountPoint.GlobalRotation;
+        }
     }
 }
