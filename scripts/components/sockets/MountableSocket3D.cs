@@ -9,7 +9,6 @@ namespace Common.Components.Sockets {
         private Vector3 positionOffset;
 
         public Vector3 GetMountPoint () {
-            Vector3 mountRotation = GetMountRotation ();
             return mountPoint.GlobalPosition +
                 mountPoint.GlobalTransform.Basis.X * positionOffset.X +
                 mountPoint.GlobalTransform.Basis.Y * positionOffset.Y +
