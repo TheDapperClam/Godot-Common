@@ -18,8 +18,8 @@ namespace Common.Components.Sockets {
             }
         }
 
-        public override void _PhysicsProcess (double delta) {
-            base._PhysicsProcess (delta);
+        public override void _Process (double delta) {
+            base._Process (delta);
 
             if (child is IMountable3D mountable3D && GetParent() is Node3D parent3D) {
                 parent3D.GlobalPosition = mountable3D.GetMountPoint ();
