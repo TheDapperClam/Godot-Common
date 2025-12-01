@@ -6,9 +6,12 @@ namespace Common.Components.Actions.Movement {
     public partial class Moveable3D : Moveable {
         private static readonly Logger logger = new (typeof (Moveable3D));
 
+        [Export]
+        private Node3D directionTarget;
+
         public override void Move (Vector2 direction, double delta) {
             if (GetParent () is CharacterBody3D body3d) {
-                Vector2 relativeDirection = direction.Rotated (-body3d.GlobalRotation.Y);
+                Vector2 relativeDirection = direction.Rotated (directionTarget != null ? -directionTarget.GlobalRotation.Y : body3d.GlobalRotation.Y);
                 Vector3 velocity = body3d.GetRealVelocity ();
                 velocity.X = relativeDirection.X * moveSpeed * (float) delta;
                 velocity.Z = relativeDirection.Y * moveSpeed * (float) delta;
