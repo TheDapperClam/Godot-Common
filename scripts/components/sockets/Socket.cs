@@ -5,7 +5,7 @@ namespace Common.Components.Sockets {
     [GlobalClass]
     public partial class Socket : Node, IInputPipe, ISocket {
         [Signal]
-        public delegate void InputEventHandler (InputEvent inputEvent, Variant arg);
+        public delegate void InputEventHandler (InputEventAction inputEvent);
 
         [Export]
         private Node child;
@@ -41,12 +41,12 @@ namespace Common.Components.Sockets {
             return child != null;
         }
 
-        public void Pipe (InputEvent inputEvent, Variant arg) {
+        public void Pipe (InputEvent inputEvent) {
             if (child is IInputPipe pipe) {
-                pipe.Pipe (inputEvent, arg);
+                pipe.Pipe (inputEvent);
                 return;
             }
-            EmitSignal (SignalName.Input, inputEvent, arg);
+            EmitSignal (SignalName.Input, inputEvent);
         }
     }
 }

@@ -50,43 +50,43 @@ namespace Common.Components.Actions.Movement {
             inputActionMap.Add (moveActionUp, MoveUpPressed, MoveUpReleased);
         }
 
-        public void Pipe (InputEvent inputEvent, Variant arg) {
-            inputActionMap.Process (inputEvent, arg);
+        public void Pipe (InputEvent inputEvent) {
+            inputActionMap.Process (inputEvent);
 
             float horizontal = movingRight - movingLeft;
             float vertical = movingDown - movingUp;
             moveDirection = new Vector2 (horizontal, vertical);
         }
 
-        private void MoveDownPressed (Variant arg) {
-            movingDown = (float) arg.AsDouble ();
+        private void MoveDownPressed (float strength) {
+            movingDown = strength;
         }
 
-        private void MoveLeftPressed (Variant arg) {
-            movingLeft = (float) arg.AsDouble ();
+        private void MoveLeftPressed (float strength) {
+            movingLeft = strength;
         }
 
-        private void MoveRightPressed (Variant arg) {
-            movingRight = (float) arg.AsDouble ();
+        private void MoveRightPressed (float strength) {
+            movingRight = strength;
         }
 
-        private void MoveUpPressed (Variant arg) {
-            movingUp = (float) arg.AsDouble ();
+        private void MoveUpPressed (float strength) {
+            movingUp = strength;
         }
 
-        private void MoveDownReleased (Variant arg) {
+        private void MoveDownReleased (float strength) {
             movingDown = 0.0f;
         }
 
-        private void MoveLeftReleased (Variant arg) {
+        private void MoveLeftReleased (float strength) {
             movingLeft = 0.0f;
         }
 
-        private void MoveRightReleased (Variant arg) {
+        private void MoveRightReleased (float strength) {
             movingRight = 0.0f;
         }
 
-        private void MoveUpReleased (Variant arg) {
+        private void MoveUpReleased (float strength) {
             movingUp = 0.0f;
         }
     }

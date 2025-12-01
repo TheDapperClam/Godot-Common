@@ -2,6 +2,6 @@ using Godot;
 
 namespace Common.Input.Piping {
     public interface IInputPipe {
-        void Pipe (InputEvent inputEvent, Variant arg);
+        void Pipe (InputEvent inputEvent);
     }
 }

@@ -10,8 +10,6 @@ namespace Common.Components.Actions.Rotation {
         private readonly IInputActionMap inputActionMap = new InputActionMap ();
 
         [Export]
-        private string rotateActionMouse = "mouse_axis";
-        [Export]
         private string rotateActionDown = "look_down";
         [Export]
         private string rotateActionLeft = "look_left";
@@ -34,7 +32,6 @@ namespace Common.Components.Actions.Rotation {
             sensitivityJoy = SettingsManager.GetSetting ("input/joy_sensitivity", Vector2.One * 3.0f).AsVector2 ();
             sensitivityMouse = SettingsManager.GetSetting ("input/mouse_sensitivity", Vector2.One * 0.25f).AsVector2 ();
 
-            inputActionMap.Add (rotateActionMouse, MouseAction, null);
             inputActionMap.Add (rotateActionDown, RotateDownPressed, RotateDownReleased);
             inputActionMap.Add (rotateActionLeft, RotateLeftPressed, RotateLeftReleased);
             inputActionMap.Add (rotateActionRight, RotateRightPressed, RotateRightReleased);
@@ -57,8 +54,8 @@ namespace Common.Components.Actions.Rotation {
             }
         }
 
-        public void Pipe (InputEvent inputEvent, Variant arg) {
-            inputActionMap.Process (inputEvent, arg);
+        public void Pipe (InputEvent inputEvent) {
+            inputActionMap.Process (inputEvent);
         }
 
         public void Rotate (Vector3 amount) {
@@ -70,40 +67,35 @@ namespace Common.Components.Actions.Rotation {
             }
         }
 
-        private void MouseAction (Variant arg) {
-            Vector2 axis = arg.AsVector2 ();
-            rotateAmount = VectorUtils.Vector2XYToVector3XY (axis * sensitivityMouse);
+        private void RotateDownPressed (float strength) {
+            rotateDown = strength;
         }
 
-        private void RotateDownPressed (Variant arg) {
-            rotateDown = (float) arg.AsDouble ();
-        }
-
-        private void RotateDownReleased (Variant arg) {
+        private void RotateDownReleased (float strength) {
             rotateDown = 0f;
         }
 
-        private void RotateLeftPressed (Variant arg) {
-            rotateLeft = (float) arg.AsDouble ();
+        private void RotateLeftPressed (float strength) {
+            rotateLeft = strength;
         }
 
-        private void RotateLeftReleased (Variant arg) {
+        private void RotateLeftReleased (float strength) {
             rotateLeft = 0f;
         }
 
-        private void RotateRightPressed (Variant arg) {
-            rotateRight = (float) arg.AsDouble ();
+        private void RotateRightPressed (float strength) {
+            rotateRight = strength;
         }
 
-        private void RotateRightReleased (Variant arg) {
+        private void RotateRightReleased (float strength) {
             rotateRight = 0f;
         }
 
-        private void RotateUpPressed (Variant arg) {
-            rotateUp = (float) arg.AsDouble ();
+        private void RotateUpPressed (float strength) {
+            rotateUp = strength;
         }
 
-        private void RotateUpReleased (Variant arg) {
+        private void RotateUpReleased (float strength) {
             rotateUp = 0f;
         }
     }
