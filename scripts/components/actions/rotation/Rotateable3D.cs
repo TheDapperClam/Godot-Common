@@ -65,7 +65,7 @@ namespace Common.Components.Actions.Rotation {
             if (GetParent () is Node3D parent3D) {
                 Vector3 clampedRotation = parent3D.Rotation;
                 clampedRotation.Y -= amount.X;
-                clampedRotation.X = Mathf.Clamp (clampedRotation.X - amount.Y, -90, 90);
+                clampedRotation.X = Mathf.Clamp (clampedRotation.X - amount.Y, Mathf.DegToRad (-90f), Mathf.DegToRad (90f));
                 parent3D.Rotation = clampedRotation;
             }
         }
