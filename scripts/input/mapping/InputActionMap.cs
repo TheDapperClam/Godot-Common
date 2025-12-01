@@ -17,9 +17,9 @@ namespace Common.Input.Mapping {
         public void Process (InputEvent inputEvent, Variant arg) {
             foreach (KeyValuePair<string, InputActions> mappedAction in mappedActions) {
                 if (inputEvent.IsActionPressed (mappedAction.Key)) {
-                    mappedAction.Value.Pressed?.Invoke (arg);
+                    mappedAction.Value.Pressed?.Invoke (arg.VariantType != Variant.Type.Nil ? arg : inputEvent.GetActionStrength (mappedAction.Key));
                 } else if (inputEvent.IsActionReleased (mappedAction.Key)) {
-                    mappedAction.Value.Released?.Invoke (arg);
+                    mappedAction.Value.Released?.Invoke (arg.VariantType != Variant.Type.Nil ? arg : inputEvent.GetActionStrength (mappedAction.Key));
                 }
             }
         }

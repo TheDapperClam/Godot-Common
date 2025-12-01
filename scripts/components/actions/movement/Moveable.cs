@@ -1,4 +1,3 @@
-using Common.Input.Events;
 using Common.Input.Mapping;
 using Common.Input.Piping;
 using Common.Managers.Settings;
@@ -26,19 +25,18 @@ namespace Common.Components.Actions.Movement {
 
         protected float gravity;
 
-        private bool movingDown;
-        private bool movingLeft;
-        private bool movingRight;
-        private bool movingUp;
+        private Vector2 moveDirection;
+        private float movingDown;
+        private float movingLeft;
+        private float movingRight;
+        private float movingUp;
 
         public abstract void Move (Vector2 direction, double delta);
 
         public override void _PhysicsProcess (double delta) {
             base._PhysicsProcess (delta);
 
-            float horizontal = (movingLeft ? -1f : 0f) + (movingRight ? 1f : 0f);
-            float vertical = (movingUp ? -1f : 0f) + (movingDown ? 1f : 0f);
-            Move (new Vector2 (horizontal, vertical).Normalized (), delta);
+            Move (moveDirection, delta);
         }
 
         public override void _Ready () {
@@ -54,38 +52,42 @@ namespace Common.Components.Actions.Movement {
 
         public void Pipe (InputEvent inputEvent, Variant arg) {
             inputActionMap.Process (inputEvent, arg);
+
+            float horizontal = movingRight - movingLeft;
+            float vertical = movingDown - movingUp;
+            moveDirection = new Vector2 (horizontal, vertical);
         }
 
         private void MoveDownPressed (Variant arg) {
-            movingDown = true;
+            movingDown = (float) arg.AsDouble ();
         }
 
         private void MoveLeftPressed (Variant arg) {
-            movingLeft = true;
+            movingLeft = (float) arg.AsDouble ();
         }
 
         private void MoveRightPressed (Variant arg) {
-            movingRight = true;
+            movingRight = (float) arg.AsDouble ();
         }
 
         private void MoveUpPressed (Variant arg) {
-            movingUp = true;
+            movingUp = (float) arg.AsDouble ();
         }
 
         private void MoveDownReleased (Variant arg) {
-            movingDown = false;
+            movingDown = 0.0f;
         }
 
         private void MoveLeftReleased (Variant arg) {
-            movingLeft = false;
+            movingLeft = 0.0f;
         }
 
         private void MoveRightReleased (Variant arg) {
-            movingRight = false;
+            movingRight = 0.0f;
         }
 
         private void MoveUpReleased (Variant arg) {
-            movingUp = false;
+            movingUp = 0.0f;
         }
     }
 }

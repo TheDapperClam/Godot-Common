@@ -5,11 +5,8 @@ namespace Common.Input.Translation {
     public class MouseActionTranslator : IInputEventTranslator {
         private readonly StringName actionName;
 
-        private Vector2 sensitivity;
-
-        public MouseActionTranslator (string actionName, Vector2 sensitivity) {
+        public MouseActionTranslator (string actionName) {
             this.actionName = actionName;
-            this.sensitivity = sensitivity;
         }
 
         public InputEvent Translate (InputEvent inputEvent) {
@@ -17,7 +14,7 @@ namespace Common.Input.Translation {
                 return new InputEventVariantAction () {
                     Action = actionName,
                     Pressed = true,
-                    Variant = mouseMotion.Relative * sensitivity
+                    Variant = mouseMotion.Relative
                 };
             }
             return inputEvent;
