@@ -1,12 +1,11 @@
-using Common.Input.ActionMaps;
 using Common.Items.Fireables;
 using Common.Logging;
 using Godot;
-using System.Collections.Generic;
 
 namespace Common.Components.Inventories {
+    // TODO: Add support for socket system input
     [GlobalClass]
-    public partial class InventorySelector : Node, IActionMappable {
+    public partial class InventorySelector : Node {
         private static readonly Logger logger = new (typeof (InventorySelector));
 
         [Signal]
@@ -44,14 +43,6 @@ namespace Common.Components.Inventories {
 
         public Node GetSelected () {
             return targetInventory.Get (index);
-        }
-
-        public Dictionary<string, PressReleaseActions> GetActions () {
-            return new () {
-                { firePrimaryAction, new (FirePrimaryPressed, FirePrimaryReleased) },
-                { nextAction, new (InventoryNextPressed, null) },
-                { previousAction, new (InventoryPreviousPressed, null) }
-            };
         }
 
         public void SetIndex (int newIndex) {
