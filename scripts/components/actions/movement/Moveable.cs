@@ -5,12 +5,7 @@ using Godot;
 
 namespace Common.Components.Actions.Movement {
     public abstract partial class Moveable : Node, IInputPipe, IMoveable {
-        private const string GRAVITY_SETTING = "physics/3d/default_gravity";
-
         private readonly InputActionMap inputActionMap = new ();
-
-        [Export]
-        public float GravityScale { get; set; } = 1.0f;
 
         [Export]
         protected float moveSpeed = 200.0f;
@@ -22,8 +17,6 @@ namespace Common.Components.Actions.Movement {
         private string moveActionRight = "move_right";
         [Export]
         private string moveActionUp= "move_up";
-
-        protected float gravity;
 
         private Vector2 moveDirection;
         private float movingDown;
@@ -41,8 +34,6 @@ namespace Common.Components.Actions.Movement {
 
         public override void _Ready () {
             base._Ready ();
-
-            gravity = (float) SettingsManager.GetSetting (GRAVITY_SETTING, 9.8f).AsDouble ();
 
             inputActionMap.Add (moveActionDown, MoveDownPressed, MoveDownReleased);
             inputActionMap.Add (moveActionLeft, MoveLeftPressed, MoveLeftReleased);

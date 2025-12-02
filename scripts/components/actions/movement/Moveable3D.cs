@@ -25,7 +25,6 @@ namespace Common.Components.Actions.Movement {
                 Vector3 velocity = parentBody.GetRealVelocity ();
                 velocity.X = relativeDirection.X * moveSpeed * (float) delta;
                 velocity.Z = relativeDirection.Y * moveSpeed * (float) delta;
-                velocity.Y -= gravity * GravityScale * (float) delta;
                 parentBody.Velocity = velocity;
             }
         }
