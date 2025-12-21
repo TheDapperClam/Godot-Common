@@ -12,7 +12,6 @@ namespace Common.Components.Actions.Movement {
         [Export]
         private string jumpActionName = "jump";
 
-        private bool doJump;
 
         public abstract void Jump ();
 
@@ -22,21 +21,12 @@ namespace Common.Components.Actions.Movement {
             inputActionMap.Add (jumpActionName, JumpPressed, null);
         }
 
-        public override void _PhysicsProcess (double delta) {
-            base._PhysicsProcess (delta);
-
-            if (doJump) {
-                doJump = false;
-                Jump ();
-            }
-        }
-
         public void Pipe (InputEvent inputEvent) {
             inputActionMap.Process (inputEvent);
         }
 
         private void JumpPressed (float strength) {
-            doJump = true;
+            Jump ();
         }
     }
 }
