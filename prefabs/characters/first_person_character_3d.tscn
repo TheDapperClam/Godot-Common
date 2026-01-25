@@ -1,0 +1,44 @@
+[gd_scene load_steps=7 format=3 uid="uid://cl2pkebolstem"]
+
+[ext_resource type="Script" uid="uid://wi3ttwofnto3" path="res://Godot-Common/scripts/components/actions/rotation/Rotateable3D.cs" id="1_dqh44"]
+[ext_resource type="Script" uid="uid://cc2wbdy3c7fcj" path="res://Godot-Common/scripts/components/sockets/MountableSocket3D.cs" id="2_vekkh"]
+[ext_resource type="Script" uid="uid://c7naeo7602mq4" path="res://Godot-Common/scripts/components/actions/movement/CharacterPhysics3D.cs" id="3_pslhc"]
+[ext_resource type="Script" uid="uid://dm1lrrsxjpwr6" path="res://Godot-Common/scripts/components/actions/movement/Moveable3D.cs" id="4_5xmi6"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_rnaij"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_qjeyg"]
+
+[node name="FirstPersonCharacter3D" type="CharacterBody3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_rnaij")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CylinderMesh_qjeyg")
+
+[node name="Mount Point" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+
+[node name="Rotateable3D" type="Node" parent="Mount Point"]
+script = ExtResource("1_dqh44")
+metadata/_custom_type_script = "uid://wi3ttwofnto3"
+
+[node name="MountableSocket3D" type="Node" parent="." node_paths=PackedStringArray("mountPoint")]
+script = ExtResource("2_vekkh")
+mountPoint = NodePath("../Mount Point")
+metadata/_custom_type_script = "uid://cc2wbdy3c7fcj"
+
+[node name="CharacterPhysics3D" type="Node" parent="."]
+script = ExtResource("3_pslhc")
+metadata/_custom_type_script = "uid://c7naeo7602mq4"
+
+[node name="Moveable3D" type="Node" parent="." node_paths=PackedStringArray("directionTarget")]
+script = ExtResource("4_5xmi6")
+directionTarget = NodePath("../Mount Point")
+metadata/_custom_type_script = "uid://dm1lrrsxjpwr6"
+
+[connection signal="Input" from="MountableSocket3D" to="Mount Point/Rotateable3D" method="Pipe"]
+[connection signal="Input" from="MountableSocket3D" to="Moveable3D" method="Pipe"]
