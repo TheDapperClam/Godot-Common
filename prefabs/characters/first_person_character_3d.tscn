@@ -5,10 +5,15 @@
 [ext_resource type="Script" uid="uid://c7naeo7602mq4" path="res://Godot-Common/scripts/components/actions/movement/CharacterPhysics3D.cs" id="3_pslhc"]
 [ext_resource type="Script" uid="uid://bd4p64qscaarh" path="res://Godot-Common/scripts/components/sockets/Socket.cs" id="3_vekkh"]
 [ext_resource type="Script" uid="uid://dm1lrrsxjpwr6" path="res://Godot-Common/scripts/components/actions/movement/Moveable3D.cs" id="4_5xmi6"]
+[ext_resource type="Script" uid="uid://cjh5lnakusk67" path="res://Godot-Common/scripts/components/actions/movement/Jumpable3D.cs" id="6_pslhc"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_rnaij"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_qjeyg"]
+
+[sub_resource type="Curve" id="Curve_pslhc"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0]
+point_count = 1
 
 [node name="FirstPersonCharacter3D" type="CharacterBody3D" unique_id=706711663]
 
@@ -36,6 +41,10 @@ child = NodePath("../BlockingSocket")
 childBlockInput = false
 metadata/_custom_type_script = "uid://cc2wbdy3c7fcj"
 
+[node name="CharacterPhysics3D" type="Node" parent="." unique_id=64498819]
+script = ExtResource("3_pslhc")
+metadata/_custom_type_script = "uid://c7naeo7602mq4"
+
 [node name="BlockingSocket" type="Node" parent="." unique_id=1271731610]
 process_mode = 1
 script = ExtResource("3_vekkh")
@@ -47,11 +56,14 @@ script = ExtResource("4_5xmi6")
 directionTarget = NodePath("../Mount Point")
 metadata/_custom_type_script = "uid://dm1lrrsxjpwr6"
 
-[node name="CharacterPhysics3D" type="Node" parent="." unique_id=64498819]
-script = ExtResource("3_pslhc")
-metadata/_custom_type_script = "uid://c7naeo7602mq4"
+[node name="Jumpable3D" type="Node" parent="." unique_id=1521716126]
+script = ExtResource("6_pslhc")
+GravityCurve = SubResource("Curve_pslhc")
+force = 5.0
+metadata/_custom_type_script = "uid://cjh5lnakusk67"
 
 [connection signal="Input" from="MountableSocket3D" to="Mount Point/Rotateable3D" method="Pipe"]
+[connection signal="Input" from="MountableSocket3D" to="Jumpable3D" method="Pipe"]
 [connection signal="ChildSocketConnected" from="BlockingSocket" to="." method="set_process_mode" binds= [4]]
 [connection signal="ChildSocketDisconnected" from="BlockingSocket" to="." method="set_process_mode" binds= [0]]
 [connection signal="Input" from="BlockingSocket" to="Moveable3D" method="Pipe"]
