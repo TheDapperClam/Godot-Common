@@ -1,11 +1,10 @@
-using Common.Logging;
 using Common.Utils.Nodes;
 using Godot;
 
 namespace Common.Components.Actions.Movement {
     [GlobalClass]
     public partial class Jumpable3D : Jumpable {
-        private static readonly Logger logger = new (typeof (Jumpable3D));
+        private static readonly Logging.Logger logger = new (typeof (Jumpable3D));
 
         [Export]
         public Curve GravityCurve { get; set; }

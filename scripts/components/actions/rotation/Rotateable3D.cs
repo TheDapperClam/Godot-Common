@@ -38,8 +38,8 @@ namespace Common.Components.Actions.Rotation {
             inputActionMap.Add (rotateActionUp, RotateUpPressed, RotateUpReleased);
         }
 
-        public override void _PhysicsProcess (double delta) {
-            base._PhysicsProcess (delta);
+        public override void _Process (double delta) {
+            base._Process (delta);
 
             float horizontal = rotateRight - rotateLeft;
             float vertical = rotateDown - rotateUp;

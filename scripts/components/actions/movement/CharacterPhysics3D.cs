@@ -1,4 +1,3 @@
-using Common.Logging;
 using Common.Managers.Settings;
 using Godot;
 
@@ -7,7 +6,7 @@ namespace Common.Components.Actions.Movement {
     public partial class CharacterPhysics3D : Node {
         private const string GRAVITY_SETTING = "physics/3d/default_gravity";
 
-        private static readonly Logger logger = new (typeof (CharacterPhysics3D));
+        private static readonly Logging.Logger logger = new (typeof (CharacterPhysics3D));
 
         [Export]
         public float GravityScale { get; set; } = 1.0f;

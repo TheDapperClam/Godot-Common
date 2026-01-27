@@ -1,5 +1,4 @@
 using Common.Items.Projectiles;
-using Common.Logging;
 using Godot;
 
 namespace Common.Items.Fireables.Weapons.Guns {
@@ -7,7 +6,7 @@ namespace Common.Items.Fireables.Weapons.Guns {
 	public partial class Gun3D : Node3D, IHoldFireable {
 		private const float TARGET_MAX_RANGE = 100000.0f;
 
-		private static readonly Logger logger = new (typeof (Gun3D));
+		private static readonly Logging.Logger logger = new (typeof (Gun3D));
 
 		[Export]
 		private Node3D muzzle;

@@ -1,11 +1,10 @@
-using Common.Logging;
 using Godot;
 using Godot.Collections;
 
 namespace Common.Components.Inventories {
     [GlobalClass]
     public partial class Inventory : Node {
-        private static readonly Logger logger = new (typeof(Inventory));
+        private static readonly Logging.Logger logger = new (typeof(Inventory));
 
         [Export]
         private Array<Node> items = [];

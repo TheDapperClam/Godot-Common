@@ -6,9 +6,15 @@ namespace Common.Components.Sockets {
     public partial class Socket : Node, IInputPipe, ISocket {
         [Signal]
         public delegate void InputEventHandler (InputEventAction inputEvent);
+        [Signal]
+        public delegate void ChildSocketConnectedEventHandler ();
+        [Signal]
+        public delegate void ChildSocketDisconnectedEventHandler ();
 
         [Export]
         private Node child;
+        [Export]
+        private bool childBlockInput = true;
 
         public override void _Ready () {
             base._Ready ();
@@ -30,11 +36,13 @@ namespace Common.Components.Sockets {
         public void Connect (Node child) {
             child.Connect (Node.SignalName.TreeExiting, Callable.From (Disconnect));
             this.child = child;
+            EmitSignal (SignalName.ChildSocketConnected);
         }
 
         public void Disconnect () {
             child.Disconnect (Node.SignalName.TreeExiting, Callable.From (Disconnect));
             child = null;
+            EmitSignal (SignalName.ChildSocketDisconnected);
         }
 
         public bool IsConnected () {
@@ -44,7 +52,9 @@ namespace Common.Components.Sockets {
         public void Pipe (InputEvent inputEvent) {
             if (child is IInputPipe pipe) {
                 pipe.Pipe (inputEvent);
-                return;
+                if (childBlockInput) {
+                    return;
+                }
             }
             EmitSignal (SignalName.Input, inputEvent);
         }

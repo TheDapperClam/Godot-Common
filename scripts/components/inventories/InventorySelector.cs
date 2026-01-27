@@ -1,12 +1,11 @@
 using Common.Items.Fireables;
-using Common.Logging;
 using Godot;
 
 namespace Common.Components.Inventories {
     // TODO: Add support for socket system input
     [GlobalClass]
     public partial class InventorySelector : Node {
-        private static readonly Logger logger = new (typeof (InventorySelector));
+        private static readonly Logging.Logger logger = new (typeof (InventorySelector));
 
         [Signal]
         public delegate void SelectionChangedEventHandler (Node selected);

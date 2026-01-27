@@ -1,6 +1,5 @@
 using Common.Input.Mapping;
 using Common.Input.Piping;
-using Common.Managers.Settings;
 using Godot;
 
 namespace Common.Components.Actions.Movement {
@@ -8,7 +7,11 @@ namespace Common.Components.Actions.Movement {
         private readonly InputActionMap inputActionMap = new ();
 
         [Export]
-        protected float moveSpeed = 200.0f;
+        protected float acceleration = 100.0f;
+        [Export]
+        protected float deceleration = 100.0f;
+        [Export]
+        protected float moveSpeed = 3.0f;
         [Export]
         private string moveActionDown = "move_down";
         [Export]

@@ -1,10 +1,9 @@
-using Common.Logging;
 using Godot;
 
 namespace Common.Components.Hurtables {
     [GlobalClass]
     public partial class Health : Node, IHurtable {
-        private static readonly Logger logger = new Logger (typeof (Health));
+        private static readonly Logging.Logger logger = new (typeof (Health));
 
         [Signal]
         public delegate void DamagedEventHandler ();
