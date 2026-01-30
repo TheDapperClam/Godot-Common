@@ -12,13 +12,13 @@
 [sub_resource type="CylinderMesh" id="CylinderMesh_qjeyg"]
 
 [sub_resource type="Curve" id="Curve_5xmi6"]
-_limits = [0.0, 50.0, 0.0, 1.0]
-_data = [Vector2(0, 50), 0.0, 0.0, 0, 0]
+_limits = [60.0, 100.0, 0.0, 1.0]
+_data = [Vector2(0, 60), 0.0, 0.0, 0, 0]
 point_count = 1
 
 [sub_resource type="Curve" id="Curve_7jxcf"]
-_limits = [0.0, 30.0, 0.0, 1.0]
-_data = [Vector2(0, 30), 0.0, 0.0, 0, 0]
+_limits = [0.0, 50.0, 0.0, 1.0]
+_data = [Vector2(0, 50), 0.0, 0.0, 0, 0]
 point_count = 1
 
 [sub_resource type="Curve" id="Curve_pslhc"]
@@ -65,6 +65,7 @@ script = ExtResource("4_5xmi6")
 directionTarget = NodePath("../Mount Point")
 accelerationCurve = SubResource("Curve_5xmi6")
 decelerationCurve = SubResource("Curve_7jxcf")
+moveSpeed = 4.0
 metadata/_custom_type_script = "uid://dm1lrrsxjpwr6"
 
 [node name="Jumpable3D" type="Node" parent="." unique_id=1521716126]

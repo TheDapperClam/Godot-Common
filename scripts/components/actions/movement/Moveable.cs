@@ -11,6 +11,8 @@ namespace Common.Components.Actions.Movement {
         [Export]
         protected Curve decelerationCurve;
         [Export]
+        protected Curve momentumTransferCurve;
+        [Export]
         protected float moveSpeed = 3.0f;
         [Export]
         private string moveActionDown = "move_down";
