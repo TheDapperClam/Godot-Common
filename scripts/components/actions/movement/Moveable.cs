@@ -7,9 +7,9 @@ namespace Common.Components.Actions.Movement {
         private readonly InputActionMap inputActionMap = new ();
 
         [Export]
-        protected float acceleration = 100.0f;
+        protected Curve accelerationCurve;
         [Export]
-        protected float deceleration = 100.0f;
+        protected Curve decelerationCurve;
         [Export]
         protected float moveSpeed = 3.0f;
         [Export]

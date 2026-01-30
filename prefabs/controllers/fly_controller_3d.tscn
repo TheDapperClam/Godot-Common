@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://d3wsog6n06wo2"]
+[gd_scene format=3 uid="uid://d3wsog6n06wo2"]
 
 [ext_resource type="Script" uid="uid://wi3ttwofnto3" path="res://Godot-Common/scripts/components/actions/rotation/Rotateable3D.cs" id="1_lhrw3"]
 [ext_resource type="Script" uid="uid://dgq1kcopnh42u" path="res://Godot-Common/scripts/components/sockets/PlayerSocket.cs" id="2_dfxm7"]
@@ -7,31 +7,42 @@
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_rnaij"]
 
-[node name="FlyController3D" type="CharacterBody3D"]
+[sub_resource type="Curve" id="Curve_lhrw3"]
+_limits = [0.0, 100.0, 0.0, 1.0]
+_data = [Vector2(0, 100), 0.0, 0.0, 0, 0]
+point_count = 1
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[sub_resource type="Curve" id="Curve_dfxm7"]
+_limits = [0.0, 50.0, 0.0, 1.0]
+_data = [Vector2(0, 50), 0.0, 0.0, 0, 0]
+point_count = 1
+
+[node name="FlyController3D" type="CharacterBody3D" unique_id=81032956]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=320881803]
 shape = SubResource("SphereShape3D_rnaij")
 disabled = true
 
-[node name="Camera3D" type="Camera3D" parent="."]
+[node name="Camera3D" type="Camera3D" parent="." unique_id=2075142288]
 current = true
 fov = 90.0
 
-[node name="Rotateable3D" type="Node" parent="Camera3D"]
+[node name="Rotateable3D" type="Node" parent="Camera3D" unique_id=1222612691]
 script = ExtResource("1_lhrw3")
 metadata/_custom_type_script = "uid://wi3ttwofnto3"
 
-[node name="PlayerSocket" type="Node" parent="." node_paths=PackedStringArray("child")]
+[node name="PlayerSocket" type="Node" parent="." unique_id=783086950]
 script = ExtResource("2_dfxm7")
-child = NodePath("")
 metadata/_custom_type_script = "uid://dgq1kcopnh42u"
 
-[node name="Moveable3D" type="Node" parent="." node_paths=PackedStringArray("directionTarget")]
+[node name="Moveable3D" type="Node" parent="." unique_id=695504988 node_paths=PackedStringArray("directionTarget")]
 script = ExtResource("3_gf2id")
 directionTarget = NodePath("../Camera3D")
+accelerationCurve = SubResource("Curve_lhrw3")
+decelerationCurve = SubResource("Curve_dfxm7")
 metadata/_custom_type_script = "uid://dm1lrrsxjpwr6"
 
-[node name="CharacterPhysics3D" type="Node" parent="."]
+[node name="CharacterPhysics3D" type="Node" parent="." unique_id=1590691952]
 script = ExtResource("4_a78t7")
 GravityScale = 0.0
 metadata/_custom_type_script = "uid://c7naeo7602mq4"

@@ -21,22 +21,14 @@ namespace Common.Components.Actions.Movement {
 
         public override void Move (Vector2 direction, double delta) {
             if (parentBody != null) {
-                bool moving = direction.Length () > 0f;
                 Vector2 relativeDirection = direction.Rotated (directionTarget != null ? -directionTarget.GlobalRotation.Y : parentBody.GlobalRotation.Y);
                 Vector3 velocity = parentBody.GetRealVelocity ();
-
-                if (moving) {
-                    velocity.X += relativeDirection.X * acceleration * (float) delta;
-                    velocity.Z += relativeDirection.Y * acceleration * (float) delta;
-                }
-
                 Vector3 horizontalVel = velocity.Slide (Vector3.Up);
-                Vector3 horizontalDir = horizontalVel.Normalized ();
+                float t = horizontalVel.Length () / moveSpeed;
 
-                if (!moving) {
-                    horizontalVel -= horizontalDir * Mathf.Min (horizontalVel.Length (), deceleration * (float) delta);
-                }
-                parentBody.Velocity = horizontalDir * Mathf.Min (horizontalVel.Length (), moveSpeed) + Vector3.Up * velocity.Y;
+                horizontalVel += VectorUtils.Vector2XYToVector3XZ (relativeDirection) * accelerationCurve.Sample (t) * (float) delta;
+                horizontalVel -= horizontalVel.Normalized () * Mathf.Min (horizontalVel.Length (), decelerationCurve.Sample (t) * (float) delta);
+                parentBody.Velocity = horizontalVel.Normalized () * Mathf.Min (horizontalVel.Length (), moveSpeed) + velocity.Y * Vector3.Up;
             }
         }
     }

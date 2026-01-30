@@ -17,20 +17,17 @@ namespace Common.Components.Actions.Rotation {
         private string rotateActionRight = "look_right";
         [Export]
         private string rotateActionUp = "look_up";
+        [Export]
+        private float rotateSpeed = 300.0f;
 
         private Vector3 rotateAmount;
         private float rotateDown;
         private float rotateLeft;
         private float rotateRight;
         private float rotateUp;
-        private Vector2 sensitivityJoy;
-        private Vector2 sensitivityMouse;
 
         public override void _Ready () {
             base._Ready ();
-
-            sensitivityJoy = SettingsManager.GetSetting ("input/joy_sensitivity", Vector2.One * 3.0f).AsVector2 ();
-            sensitivityMouse = SettingsManager.GetSetting ("input/mouse_sensitivity", Vector2.One * 0.25f).AsVector2 ();
 
             inputActionMap.Add (rotateActionDown, RotateDownPressed, RotateDownReleased);
             inputActionMap.Add (rotateActionLeft, RotateLeftPressed, RotateLeftReleased);
@@ -46,7 +43,7 @@ namespace Common.Components.Actions.Rotation {
 
             if (horizontal != 0f || vertical != 0f) {
                 Vector2 axis = new (horizontal, vertical);
-                rotateAmount = VectorUtils.Vector2XYToVector3XY (axis * sensitivityJoy);
+                rotateAmount = VectorUtils.Vector2XYToVector3XY (axis) * rotateSpeed * (float) delta;
             }
             if (rotateAmount.Length () > 0f) {
                 Rotate (rotateAmount * (float) delta);
