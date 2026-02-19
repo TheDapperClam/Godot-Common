@@ -1,3 +1,4 @@
+using Common.Components.Physics;
 using Common.Utils.Nodes;
 using Godot;
 

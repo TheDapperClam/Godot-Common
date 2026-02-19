@@ -1,7 +1,7 @@
 using Common.Managers.Settings;
 using Godot;
 
-namespace Common.Components.Actions.Movement {
+namespace Common.Components.Physics {
     [GlobalClass]
     public partial class CharacterPhysics3D : Node {
         private const string GRAVITY_SETTING = "physics/3d/default_gravity";
