@@ -1,11 +1,7 @@
-using Common.Input.Mapping;
-using Common.Input.Piping;
 using Godot;
 
 namespace Common.Components.Actions.Movement {
-    public abstract partial class Jumpable : Node, IInputPipe, IJumpable {
-        private readonly InputActionMap inputActionMap = new ();
-
+    public abstract partial class Jumpable : ActionBase, IJumpable {
         [Export]
         protected float force = 10.0f;
 
@@ -19,10 +15,6 @@ namespace Common.Components.Actions.Movement {
             base._Ready ();
 
             inputActionMap.Add (jumpActionName, JumpPressed, null);
-        }
-
-        public void Pipe (InputEvent inputEvent) {
-            inputActionMap.Process (inputEvent);
         }
 
         private void JumpPressed (float strength) {

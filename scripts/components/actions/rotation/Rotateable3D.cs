@@ -6,9 +6,7 @@ using Godot;
 
 namespace Common.Components.Actions.Rotation {
     [GlobalClass]
-    public partial class Rotateable3D : Node, IInputPipe, IRotateable3D {
-        private readonly IInputActionMap inputActionMap = new InputActionMap ();
-
+    public partial class Rotateable3D : ActionBase, IRotateable3D {
         [Export]
         private string rotateActionDown = "look_down";
         [Export]
@@ -49,10 +47,6 @@ namespace Common.Components.Actions.Rotation {
                 Rotate (rotateAmount * (float) delta);
                 rotateAmount = Vector3.Zero;
             }
-        }
-
-        public void Pipe (InputEvent inputEvent) {
-            inputActionMap.Process (inputEvent);
         }
 
         public void Rotate (Vector3 amount) {

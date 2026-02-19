@@ -3,9 +3,7 @@ using Common.Input.Piping;
 using Godot;
 
 namespace Common.Components.Actions.Movement {
-    public abstract partial class Moveable : Node, IInputPipe, IMoveable {
-        private readonly InputActionMap inputActionMap = new ();
-
+    public abstract partial class Moveable : ActionBase, IMoveable {
         [Export]
         protected Curve accelerationCurve;
         [Export]
@@ -46,8 +44,8 @@ namespace Common.Components.Actions.Movement {
             inputActionMap.Add (moveActionUp, MoveUpPressed, MoveUpReleased);
         }
 
-        public void Pipe (InputEvent inputEvent) {
-            inputActionMap.Process (inputEvent);
+        public override void Pipe (InputEvent inputEvent) {
+            base.Pipe (inputEvent);
 
             float horizontal = movingRight - movingLeft;
             float vertical = movingDown - movingUp;
