@@ -1,0 +1,9 @@
+#!/bin/sh
+
+message_regex='(TRELLO:\d+\n)(chore|feat|fix|refactor):\s+(.+)'
+error_message='Commit message does not match format:\nTRELLO:number\ntype: message'
+
+if ! grep -Pzo "$message_regex" "$1"; then
+	echo -e $error_message
+	exit 1
+fi
